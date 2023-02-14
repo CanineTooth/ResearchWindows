@@ -176,12 +176,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="global_object.cpp" />
+    <ClCompile Include="kernel_rtl.c" />
     <ClCompile Include="kernel_stl.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="unicode.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global_object.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="kernel_rtl.h" />
+    <ClInclude Include="unicode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

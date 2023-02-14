@@ -9,7 +9,10 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Cpp Files">
+    <Filter Include="Kernel Runtime">
+      <UniqueIdentifier>{aac84be7-1409-4d8e-b751-aadae9762538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cpp Runtime">
       <UniqueIdentifier>{3bbc57ff-7f7d-42f8-8eaf-576fac41b688}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -18,10 +21,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="global_object.cpp">
-      <Filter>Cpp Files</Filter>
+      <Filter>Cpp Runtime</Filter>
     </ClCompile>
     <ClCompile Include="kernel_stl.cpp">
-      <Filter>Cpp Files</Filter>
+      <Filter>Cpp Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="unicode.c">
+      <Filter>Kernel Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel_rtl.c">
+      <Filter>Kernel Runtime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -29,7 +38,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="global_object.h">
-      <Filter>Cpp Files</Filter>
+      <Filter>Cpp Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel_rtl.h">
+      <Filter>Kernel Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="unicode.h">
+      <Filter>Kernel Runtime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

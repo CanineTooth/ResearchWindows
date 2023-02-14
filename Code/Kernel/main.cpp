@@ -1,6 +1,6 @@
 #include "main.h"
 #include "global_object.h"
-
+#include "kernel_rtl.h"
 #if defined(ALLOC_PRAGMA)
 #pragma alloc_text(INIT, DriverEntry)
 #pragma alloc_text(PAGE, DriverUnload)
@@ -16,7 +16,11 @@ DriverEntry(
 	UNREFERENCED_PARAMETER(RegistryPath);
 	NTSTATUS status{};
 	DriverObject->DriverUnload = DriverUnload;
-
+	status = KernelRuntimeInitialization(reinterpret_cast<PLIST_ENTRY>(DriverObject->DriverSection));
+	if (!NT_SUCCESS(status))
+	{
+		return status;
+	}
 	status = GlobalObjectInitialization();
 	if (!NT_SUCCESS(status))
 	{
@@ -31,4 +35,5 @@ VOID DriverUnload(
 	PAGED_CODE();
 	UNREFERENCED_PARAMETER(DriverObject);
 	GlobalObjectTermination();
+	KernelRuntimeTermination();
 }
