@@ -12,6 +12,10 @@
 EXTERN_C_START
 /// A pool tag for this module
 static const ULONG kGlobalObjectpPoolTag = 'jbOG';
+using pExFreePoolWithTag = VOID(*)(PVOID P, ULONG Tag);
+using pExAllocatePoolWithTag = PVOID(*)(POOL_TYPE PoolType, SIZE_T NumberOfBytes, ULONG Tag);
+EXTERN_C pExAllocatePoolWithTag ExAllocatePoolWithTag_base;
+EXTERN_C pExFreePoolWithTag ExFreePoolWithTag_base;
 
 using Destructor = void(__cdecl*)();
 
@@ -55,7 +59,7 @@ _Use_decl_annotations_ void GlobalObjectTermination()
 	{
 		const auto element = CONTAINING_RECORD(entry, DestructorEntry, list_entry);
 		element->dtor();
-		ExFreePoolWithTag(element, kGlobalObjectpPoolTag);
+		ExFreePoolWithTag_base(element, kGlobalObjectpPoolTag);
 		entry = PopEntryList(&g_gop_dtors_list_head);
 	}
 }
@@ -67,8 +71,8 @@ _IRQL_requires_max_(PASSIVE_LEVEL) int __cdecl atexit(_In_ Destructor dtor)
 {
 	PAGED_CODE();
 
-	const auto element = reinterpret_cast<DestructorEntry*>(ExAllocatePoolZero(
-		PagedPool, sizeof(DestructorEntry), kGlobalObjectpPoolTag));
+	const auto element = reinterpret_cast<DestructorEntry*>(ExAllocatePoolWithTag_base(
+		(POOL_TYPE)(PagedPool | POOL_ZERO_ALLOCATION), sizeof(DestructorEntry), kGlobalObjectpPoolTag));
 	if (!element)
 	{
 		return 1;

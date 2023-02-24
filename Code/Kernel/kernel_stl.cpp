@@ -7,13 +7,19 @@
 #pragma clang diagnostic pop
 
 static const ULONG kstl_pool_tag = 'LTSK';
+using pExFreePoolWithTag = VOID(*)(PVOID P, ULONG Tag);
+using pExAllocatePoolWithTag = PVOID(*)(POOL_TYPE PoolType, SIZE_T NumberOfBytes, ULONG Tag);
+using pKeBugCheck = VOID(*)(ULONG BugCheckCode);
+EXTERN_C pExAllocatePoolWithTag ExAllocatePoolWithTag_base;
+EXTERN_C pExFreePoolWithTag ExFreePoolWithTag_base;
+EXTERN_C pKeBugCheck KeBugCheck_base;
 
 DECLSPEC_NORETURN
 static void KernelStlpRaiseException(_In_ ULONG bug_check_code)
 {
 #pragma warning(push)
 #pragma warning(disable : 28159)
-	KeBugCheck(bug_check_code);
+	KeBugCheck_base(bug_check_code);
 #pragma warning(pop)
 }
 
@@ -82,7 +88,7 @@ namespace std
 
 _NODISCARD _Ret_notnull_ _Post_writable_byte_size_(size) void* __cdecl operator new(size_t size)
 {
-	auto p = ExAllocatePoolZero(NonPagedPool, size == 0 ? 1 : size, kstl_pool_tag);
+	auto p = ExAllocatePoolWithTag_base((POOL_TYPE)(NonPagedPool | POOL_ZERO_ALLOCATION), size == 0 ? 1 : size, kstl_pool_tag);
 	if (!p)
 		KernelStlpRaiseException(MUST_SUCCEED_POOL_EMPTY);
 	return p;
@@ -92,7 +98,7 @@ void __cdecl operator delete(void* p)
 {
 	if (p)
 	{
-		ExFreePoolWithTag(p, kstl_pool_tag);
+		ExFreePoolWithTag_base(p, kstl_pool_tag);
 	}
 }
 
@@ -101,13 +107,13 @@ void __cdecl operator delete(void* p, size_t size)
 	size;
 	if (p)
 	{
-		ExFreePoolWithTag(p, kstl_pool_tag);
+		ExFreePoolWithTag_base(p, kstl_pool_tag);
 	}
 }
 
 _NODISCARD _Ret_notnull_ _Post_writable_byte_size_(size) void* __cdecl operator new[](size_t size)
 {
-	auto p = ExAllocatePoolZero(NonPagedPool, size == 0 ? 1 : size, kstl_pool_tag);
+	auto p = ExAllocatePoolWithTag_base((POOL_TYPE)(NonPagedPool | POOL_ZERO_ALLOCATION), size == 0 ? 1 : size, kstl_pool_tag);
 	if (!p)
 		KernelStlpRaiseException(MUST_SUCCEED_POOL_EMPTY);
 	return p;
@@ -117,7 +123,7 @@ void __cdecl operator delete[](void* p)
 {
 	if (p)
 	{
-		ExFreePoolWithTag(p, kstl_pool_tag);
+		ExFreePoolWithTag_base(p, kstl_pool_tag);
 	}
 }
 
@@ -126,7 +132,7 @@ void __cdecl operator delete[](void* p, size_t size)
 	size;
 	if (p)
 	{
-		ExFreePoolWithTag(p, kstl_pool_tag);
+		ExFreePoolWithTag_base(p, kstl_pool_tag);
 	}
 }
 #pragma clang diagnostic pop
