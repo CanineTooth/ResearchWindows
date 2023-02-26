@@ -12,8 +12,6 @@ ULONG_PTR ExAllocatePoolWithTag_base = 0;
 ULONG_PTR ExFreePoolWithTag_base = 0;
 ULONG_PTR KeBugCheck_base = 0;
 
-ULONG_PTR KrFindExportedRoutineByName(const char* RoutineName);
-
 NTSTATUS KernelRuntimeInitialization(PLIST_ENTRY DriverSection)
 {
 	PAGED_CODE();
@@ -38,9 +36,9 @@ NTSTATUS KernelRuntimeInitialization(PLIST_ENTRY DriverSection)
 	}
 	else
 	{
-		ExAllocatePoolWithTag_base = KrFindExportedRoutineByName(xorstr_("ExAllocatePoolWithTag"));
-		ExFreePoolWithTag_base = KrFindExportedRoutineByName(xorstr_("ExFreePoolWithTag"));
-		KeBugCheck_base = KrFindExportedRoutineByName(xorstr_("KeBugCheck"));
+		ExAllocatePoolWithTag_base = (ULONG_PTR)KrFindExportedRoutineByName((PVOID)ntoskrnl_base, xorstr_("ExAllocatePoolWithTag"));
+		ExFreePoolWithTag_base = (ULONG_PTR)KrFindExportedRoutineByName((PVOID)ntoskrnl_base, xorstr_("ExFreePoolWithTag"));
+		KeBugCheck_base = (ULONG_PTR)KrFindExportedRoutineByName((PVOID)ntoskrnl_base, xorstr_("KeBugCheck"));
 		if (!ExAllocatePoolWithTag_base || !ExFreePoolWithTag_base || !KeBugCheck_base)
 		{
 			status = STATUS_NOT_FOUND;
@@ -85,28 +83,28 @@ __forceinline LONG KrCompareString(const char* String1, const char* String2)
 	return n1 - n2;
 }
 
-ULONG_PTR KrFindExportedRoutineByName(const char* RoutineName)
+PVOID KrFindExportedRoutineByName(PVOID DllBase, const char* RoutineName)
 {
 	PIMAGE_EXPORT_DIRECTORY export_directory = NULL;
 	USHORT ordinal_number = 0;
 	PULONG name_table_base = NULL;
 	PUSHORT name_ordinal_table_base = NULL;
 
-	export_directory = (PIMAGE_EXPORT_DIRECTORY)(ntoskrnl_base +
-		((PIMAGE_NT_HEADERS)(ntoskrnl_base +
-			((PIMAGE_DOS_HEADER)(ntoskrnl_base))->e_lfanew))->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+	export_directory = (PIMAGE_EXPORT_DIRECTORY)((PCHAR)DllBase +
+		((PIMAGE_NT_HEADERS)((PCHAR)DllBase +
+			((PIMAGE_DOS_HEADER)((PCHAR)DllBase))->e_lfanew))->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
 	
 	//
 	// Initialize the pointer to the array of RVA-based ansi export strings.
 	//
 
-	name_table_base = (PULONG)((PCHAR)ntoskrnl_base + export_directory->AddressOfNames);
+	name_table_base = (PULONG)((PCHAR)DllBase + export_directory->AddressOfNames);
 
 	//
 	// Initialize the pointer to the array of USHORT ordinal numbers.
 	//
 
-	name_ordinal_table_base = (PUSHORT)((PCHAR)ntoskrnl_base + export_directory->AddressOfNameOrdinals);
+	name_ordinal_table_base = (PUSHORT)((PCHAR)DllBase + export_directory->AddressOfNameOrdinals);
 
 	//
 	// Lookup the desired name in the name table using a binary search.
@@ -124,7 +122,7 @@ ULONG_PTR KrFindExportedRoutineByName(const char* RoutineName)
 		//
 
 		middle = (low + high) >> 1;
-		result = KrCompareString(RoutineName, (PCHAR)ntoskrnl_base + name_table_base[middle]);
+		result = KrCompareString(RoutineName, (PCHAR)DllBase + name_table_base[middle]);
 		if (result < 0) 
 		{
 			high = middle - 1;
@@ -167,9 +165,9 @@ ULONG_PTR KrFindExportedRoutineByName(const char* RoutineName)
 	//
 
 	PULONG addr;
-	ULONG_PTR function_address;
-	addr = (PULONG)((PCHAR)ntoskrnl_base + export_directory->AddressOfFunctions);
-	function_address = (ULONG_PTR)((PCHAR)ntoskrnl_base + addr[ordinal_number]);
+	PVOID function_address;
+	addr = (PULONG)((PCHAR)DllBase + export_directory->AddressOfFunctions);
+	function_address = (PVOID)((PCHAR)DllBase + addr[ordinal_number]);
 	return function_address;
 }
 
