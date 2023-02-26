@@ -175,6 +175,7 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="export_routine.cpp" />
     <ClCompile Include="global_object.cpp" />
     <ClCompile Include="kernel_rtl.c" />
     <ClCompile Include="kernel_stl.cpp" />
@@ -182,6 +183,8 @@
     <ClCompile Include="unicode.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="debug_log.hpp" />
+    <ClInclude Include="export_routine.h" />
     <ClInclude Include="global_object.h" />
     <ClInclude Include="lazy_importer.hpp" />
     <ClInclude Include="main.h" />

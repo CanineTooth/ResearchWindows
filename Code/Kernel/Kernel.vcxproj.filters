@@ -35,6 +35,9 @@
     <ClCompile Include="kernel_rtl.c">
       <Filter>Kernel Runtime</Filter>
     </ClCompile>
+    <ClCompile Include="export_routine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -53,6 +56,12 @@
       <Filter>Util Files</Filter>
     </ClInclude>
     <ClInclude Include="lazy_importer.hpp">
+      <Filter>Util Files</Filter>
+    </ClInclude>
+    <ClInclude Include="export_routine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug_log.hpp">
       <Filter>Util Files</Filter>
     </ClInclude>
   </ItemGroup>
