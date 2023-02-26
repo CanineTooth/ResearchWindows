@@ -19,7 +19,7 @@ NTSTATUS KernelRuntimeInitialization(PLIST_ENTRY DriverSection)
 	PAGED_CODE();
 	NTSTATUS status = STATUS_SUCCESS;
 	UNICODE_STRING ntos_name;
-	KrInitUnicodeString(&ntos_name, L"ntoskrnl.exe");
+	KrInitUnicodeString(&ntos_name, xorstr_(L"ntoskrnl.exe"));
 	PLIST_ENTRY next = DriverSection->Flink;
 	while (next != DriverSection)
 	{
