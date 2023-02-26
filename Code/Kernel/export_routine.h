@@ -2,8 +2,10 @@
 #include <map>
 #include <string>
 #include "xorstr.hpp"
+
 #define CALL_HASH(name, hash) call::export_routine::get_instance().get<hash,decltype(&name)>()
 #define CALL_NAME(name) call::export_routine::get_instance().get<decltype(&name)>(std::hash<std::string>{}(xorstr_(#name)))
+#define DATA_NAME(name, type) call::export_routine::get_instance().get<type>(std::hash<std::string>{}(xorstr_(#name)))
 
 namespace call
 {
