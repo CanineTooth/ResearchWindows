@@ -18,6 +18,12 @@
     <Filter Include="Util Files">
       <UniqueIdentifier>{d336905c-cb1c-484e-aee6-9a0c3fb16e07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systeminfo Files">
+      <UniqueIdentifier>{921ca5d9-556e-4344-bd1b-42ae17bfcae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systeminfo Files\KernelModule">
+      <UniqueIdentifier>{edfecce1-3fef-47c5-aeb3-869574ac007b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="export_routine.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel_module.cpp">
+      <Filter>Systeminfo Files\KernelModule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="debug_log.hpp">
       <Filter>Util Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel_module.h">
+      <Filter>Systeminfo Files\KernelModule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
