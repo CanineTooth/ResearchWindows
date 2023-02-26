@@ -12,10 +12,7 @@ namespace call
 	class export_routine
 	{
 	private:
-		export_routine()
-		{
-			init_map();
-		}
+		export_routine() {};
 		~export_routine();
 	public:
 		export_routine(const export_routine&) = delete;
