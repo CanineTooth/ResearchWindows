@@ -1,5 +1,6 @@
 #include "kernel_rtl.h"
 #include <ntimage.h>
+#include "xorstr.hpp"
 EXTERN_C_START
 #if defined(ALLOC_PRAGMA)
 #pragma alloc_text(INIT, KernelRuntimeInitialization)
@@ -37,9 +38,9 @@ NTSTATUS KernelRuntimeInitialization(PLIST_ENTRY DriverSection)
 	}
 	else
 	{
-		ExAllocatePoolWithTag_base = KrFindExportedRoutineByName("ExAllocatePoolWithTag");
-		ExFreePoolWithTag_base = KrFindExportedRoutineByName("ExFreePoolWithTag");
-		KeBugCheck_base = KrFindExportedRoutineByName("KeBugCheck");
+		ExAllocatePoolWithTag_base = KrFindExportedRoutineByName(xorstr_("ExAllocatePoolWithTag"));
+		ExFreePoolWithTag_base = KrFindExportedRoutineByName(xorstr_("ExFreePoolWithTag"));
+		KeBugCheck_base = KrFindExportedRoutineByName(xorstr_("KeBugCheck"));
 		if (!ExAllocatePoolWithTag_base || !ExFreePoolWithTag_base || !KeBugCheck_base)
 		{
 			status = STATUS_NOT_FOUND;
