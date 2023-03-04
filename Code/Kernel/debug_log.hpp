@@ -6,7 +6,6 @@
 
 namespace util
 {
-#define DEBUG_PREFIX "CT:  "
 	class dbglog
 	{
 	public:
@@ -14,8 +13,7 @@ namespace util
 		{
 			va_list arglist;
 			va_start(arglist, Format);
-			LI_FN(vDbgPrintExWithPrefix)(DEBUG_PREFIX,
-				DPFLTR_IHVDRIVER_ID,
+			LI_FN(vDbgPrintEx)(DPFLTR_IHVDRIVER_ID,
 				DPFLTR_ERROR_LEVEL,
 				Format,
 				arglist);
@@ -24,8 +22,7 @@ namespace util
 		{
 			va_list arglist;
 			va_start(arglist, Format);
-			LI_FN(vDbgPrintExWithPrefix)(DEBUG_PREFIX,
-				DPFLTR_IHVDRIVER_ID,
+			LI_FN(vDbgPrintEx)(DPFLTR_IHVDRIVER_ID,
 				DPFLTR_ERROR_LEVEL,
 				Format,
 				arglist);
@@ -34,8 +31,7 @@ namespace util
 		{
 			va_list arglist;
 			va_start(arglist, Format);
-			LI_FN(vDbgPrintExWithPrefix)(DEBUG_PREFIX,
-				DPFLTR_IHVDRIVER_ID,
+			LI_FN(vDbgPrintEx)(DPFLTR_IHVDRIVER_ID,
 				DPFLTR_WARNING_LEVEL,
 				Format,
 				arglist);
@@ -44,8 +40,7 @@ namespace util
 		{
 			va_list arglist;
 			va_start(arglist, Format);
-			LI_FN(vDbgPrintExWithPrefix)(DEBUG_PREFIX,
-				DPFLTR_IHVDRIVER_ID,
+			LI_FN(vDbgPrintEx)(DPFLTR_IHVDRIVER_ID,
 				DPFLTR_TRACE_LEVEL,
 				Format,
 				arglist);
@@ -54,8 +49,7 @@ namespace util
 		{
 			va_list arglist;
 			va_start(arglist, Format);
-			LI_FN(vDbgPrintExWithPrefix)(DEBUG_PREFIX,
-				DPFLTR_IHVDRIVER_ID,
+			LI_FN(vDbgPrintEx)(DPFLTR_IHVDRIVER_ID,
 				DPFLTR_INFO_LEVEL,
 				Format,
 				arglist);
