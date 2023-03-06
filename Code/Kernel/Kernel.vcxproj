@@ -197,6 +197,7 @@
     <ClInclude Include="lazy_importer.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="kernel_rtl.h" />
+    <ClInclude Include="msr_index.h" />
     <ClInclude Include="unicode.h" />
     <ClInclude Include="xorstr.hpp" />
   </ItemGroup>
