@@ -159,6 +159,9 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>Wdmsec.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -175,6 +178,7 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dispatch.cpp" />
     <ClCompile Include="export_routine.cpp" />
     <ClCompile Include="global_object.cpp" />
     <ClCompile Include="kernel_module.cpp" />
@@ -184,7 +188,9 @@
     <ClCompile Include="unicode.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cpuid.h" />
     <ClInclude Include="debug_log.hpp" />
+    <ClInclude Include="dispatch.h" />
     <ClInclude Include="export_routine.h" />
     <ClInclude Include="global_object.h" />
     <ClInclude Include="kernel_module.h" />

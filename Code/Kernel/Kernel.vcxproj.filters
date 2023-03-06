@@ -47,6 +47,9 @@
     <ClCompile Include="kernel_module.cpp">
       <Filter>Systeminfo Files\KernelModule</Filter>
     </ClCompile>
+    <ClCompile Include="dispatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -75,6 +78,12 @@
     </ClInclude>
     <ClInclude Include="kernel_module.h">
       <Filter>Systeminfo Files\KernelModule</Filter>
+    </ClInclude>
+    <ClInclude Include="cpuid.h">
+      <Filter>Util Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dispatch.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
