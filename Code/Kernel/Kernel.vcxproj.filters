@@ -24,6 +24,9 @@
     <Filter Include="Systeminfo Files\KernelModule">
       <UniqueIdentifier>{edfecce1-3fef-47c5-aeb3-869574ac007b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AntiGame Files">
+      <UniqueIdentifier>{4ebf082a-661d-43eb-8bc7-01d194986837}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -49,6 +52,15 @@
     </ClCompile>
     <ClCompile Include="dispatch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="disasm.cpp">
+      <Filter>Util Files</Filter>
+    </ClCompile>
+    <ClCompile Include="detour.cpp">
+      <Filter>Util Files</Filter>
+    </ClCompile>
+    <ClCompile Include="anti_ace.cpp">
+      <Filter>AntiGame Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +99,15 @@
     </ClInclude>
     <ClInclude Include="msr_index.h">
       <Filter>Util Files</Filter>
+    </ClInclude>
+    <ClInclude Include="disasm.h">
+      <Filter>Util Files</Filter>
+    </ClInclude>
+    <ClInclude Include="detour.h">
+      <Filter>Util Files</Filter>
+    </ClInclude>
+    <ClInclude Include="anti_ace.h">
+      <Filter>AntiGame Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

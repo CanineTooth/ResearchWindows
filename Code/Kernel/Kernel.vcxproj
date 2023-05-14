@@ -178,6 +178,9 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="anti_ace.cpp" />
+    <ClCompile Include="detour.cpp" />
+    <ClCompile Include="disasm.cpp" />
     <ClCompile Include="dispatch.cpp" />
     <ClCompile Include="export_routine.cpp" />
     <ClCompile Include="global_object.cpp" />
@@ -188,8 +191,11 @@
     <ClCompile Include="unicode.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="anti_ace.h" />
     <ClInclude Include="cpuid.h" />
     <ClInclude Include="debug_log.hpp" />
+    <ClInclude Include="detour.h" />
+    <ClInclude Include="disasm.h" />
     <ClInclude Include="dispatch.h" />
     <ClInclude Include="export_routine.h" />
     <ClInclude Include="global_object.h" />

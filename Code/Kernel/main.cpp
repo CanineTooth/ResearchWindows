@@ -3,6 +3,7 @@
 #include "kernel_rtl.h"
 #include "debug_log.hpp"
 #include "dispatch.h"
+#include "anti_ace.h"
 #if defined(ALLOC_PRAGMA)
 #pragma alloc_text(INIT, DriverEntry)
 #pragma alloc_text(PAGE, DriverUnload)
@@ -63,7 +64,7 @@ DriverEntry(
 	DriverObject->MajorFunction[IRP_MJ_CREATE] = DispatchCreate;
 	DriverObject->MajorFunction[IRP_MJ_CLOSE] = DispatchClose;
 	DriverObject->MajorFunction[IRP_MJ_DEVICE_CONTROL] = DeviceIoControl;
-
+	install_hook();
 	return status;
 }
 
@@ -72,6 +73,7 @@ VOID DriverUnload(
 {
 	PAGED_CODE();
 	UNICODE_STRING dos_device_name{};
+	uninstall_hook();
 	RtlInitUnicodeString(&dos_device_name, DOS_DEVICE_NAME);
 	IoDeleteSymbolicLink(&dos_device_name);
 	IoDeleteDevice(DriverObject->DeviceObject);
